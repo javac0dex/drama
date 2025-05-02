@@ -27,80 +27,44 @@
       font-size: 2.8rem;
       font-weight: 600;
       color: #f7c800;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       text-align: center;
       letter-spacing: 2px;
     }
 
-    .search-bar {
-      margin: 20px 0 40px;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 14px 20px;
-      border-radius: 30px;
-      border: none;
-      font-size: 1rem;
-      outline: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      transition: background 0.3s ease;
-    }
-
-    .search-bar input::placeholder {
-      color: #ccc;
-    }
-
-    .search-bar input:focus {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-      width: 100%;
-      max-width: 1100px;
-    }
-
-    .drama {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 30px 20px;
-      text-align: center;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .drama:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-    }
-
-    .drama h2 {
-      margin-bottom: 15px;
-    }
-
-    .drama a {
-      display: inline-block;
-      padding: 12px 28px;
-      background: linear-gradient(to right, #6a5acd, #836fff);
-      color: white;
-      font-size: 1rem;
-      border: none;
-      border-radius: 30px;
-      text-decoration: none;
+    h2 {
+      font-size: 1.8rem;
       font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .episode-list {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .episode-item a {
+      display: block;
+      padding: 14px 25px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 1.05rem;
       transition: all 0.3s ease;
     }
 
-    .drama a:hover {
-      background: linear-gradient(to right, #836fff, #6a5acd);
-      transform: scale(1.05);
+    .episode-item a:hover {
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      transform: scale(1.02);
     }
 
     .footer {
@@ -115,9 +79,13 @@
         font-size: 2rem;
       }
 
-      .drama a {
-        font-size: 0.9rem;
-        padding: 10px 22px;
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .episode-item a {
+        font-size: 0.95rem;
+        padding: 12px 18px;
       }
     }
   </style>
@@ -125,43 +93,26 @@
 <body>
 
   <h1>DRAMAIN - Drama China Gratis</h1>
+  <h2>Drama - Kekasih Yang Baik Hati</h2>
 
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Cari judul drama..." onkeyup="filterDrama()">
-  </div>
-
-  <div class="container" id="dramaList">
-    <div class="drama">
-      <h2>Kekasih Yang Baik Hati</h2>
-      <a href="https://linktr.ee/s/templates/kekasih" target="_blank">Tonton Sekarang</a>
+  <div class="episode-list">
+    <div class="episode-item">
+      <a href="https://dramain.vercel.app/episode/1" target="_blank">Episode 1</a>
     </div>
-
-    <div class="drama">
-      <h2>Prajurit Cinta</h2>
-      <a href="https://linktr.ee/s/templates/prajurit" target="_blank">Tonton Sekarang</a>
+    <div class="episode-item">
+      <a href="https://dramain.vercel.app/episode/2" target="_blank">Episode 2</a>
     </div>
-
-    <div class="drama">
-      <h2>Klasik Mata Tajam</h2>
-      <a href="https://linktr.ee/s/templates/matatajam" target="_blank">Tonton Sekarang</a>
+    <div class="episode-item">
+      <a href="https://dramain.vercel.app/episode/3" target="_blank">Episode 3</a>
+    </div>
+    <div class="episode-item">
+      <a href="https://dramain.vercel.app/episode/4" target="_blank">Episode 4</a>
     </div>
   </div>
 
   <div class="footer">
     &copy; 2025 DRAMAIN. All Rights Reserved.
   </div>
-
-  <script>
-    function filterDrama() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const dramas = document.querySelectorAll('.drama');
-
-      dramas.forEach(drama => {
-        const title = drama.querySelector('h2').textContent.toLowerCase();
-        drama.style.display = title.includes(input) ? 'block' : 'none';
-      });
-    }
-  </script>
 
 </body>
 </html>
