@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRAMAIN - Drama China Gratis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #111118);
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #f7c800;
+      margin-bottom: 40px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .drama {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .drama:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .drama a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 28px;
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .drama a:hover {
+      background: linear-gradient(to right, #836fff, #6a5acd);
+      transform: scale(1.05);
+    }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .drama a {
+        font-size: 0.9rem;
+        padding: 10px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>DRAMAIN - Drama China Gratis</h1>
+
+  <div class="container">
+    <div class="drama">
+      <h2>Kekasih Yang Baik Hati</h2>
+      <a href="https://linktr.ee/s/templates/kekasih" target="_blank">Tonton Sekarang</a>
+    </div>
+
+    <div class="drama">
+      <h2>Prajurit Cinta</h2>
+      <a href="https://linktr.ee/s/templates/prajurit" target="_blank">Tonton Sekarang</a>
+    </div>
+
+    <div class="drama">
+      <h2>Klasik Mata Tajam</h2>
+      <a href="https://linktr.ee/s/templates/matatajam" target="_blank">Tonton Sekarang</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 DRAMAIN. All Rights Reserved.
+  </div>
+
+</body>
+</html>
