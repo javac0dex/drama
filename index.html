@@ -122,6 +122,66 @@
     }
   </style>
 </head>
+
+  <style>
+  #popup-iklan {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  #popup-iklan img {
+    max-width: 80vw;
+    max-height: 80vh;
+    cursor: pointer;
+    box-shadow: 0 0 20px #000;
+  }
+</style>
+
+<div id="popup-iklan">
+  <img src="iklan1.jpg" alt="Iklan Shopee" id="popup-img">
+</div>
+
+<script>
+  const popup = document.getElementById('popup-iklan');
+  const popupImg = document.getElementById('popup-img');
+
+  let popupClicked = false;
+  let buttonClicked = false;
+
+  // Fungsi untuk menampilkan popup
+  function showPopup() {
+    if (!popupClicked) {
+      popup.style.display = 'flex';
+    }
+  }
+
+  // Tampilkan popup pertama kali setelah 1 detik
+  setTimeout(showPopup, 1000);
+
+  // Tampilkan kembali setiap 2 menit
+  setInterval(showPopup, 120000); // 2 menit = 120.000 ms
+
+  // Saat popup diklik
+  popupImg.addEventListener('click', function () {
+    popupClicked = true;
+    popup.style.display = 'none';
+    window.open('https://s.shopee.co.id/7078Ubl2Ub', '_blank');
+  });
+
+  // Redirect satu kali saat tombol di web diklik
+  document.addEventListener('click', function (e) {
+    if (!buttonClicked && e.target.tagName.toLowerCase() === 'button') {
+      buttonClicked = true;
+      window.open('https://s.shopee.co.id/AUg4dsQtYw', '_blank');
+    }
+  });
+</script>
+
 <body>
 
   <h1>DRAMAIN - Drama China Gratis</h1>
