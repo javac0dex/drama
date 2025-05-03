@@ -90,6 +90,36 @@
     }
   </style>
 </head>
+  <div id="popup" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.4);justify-content:center;align-items:center;z-index:9999;cursor:pointer;">
+  <div style="width:300px;height:200px;background:#fff;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.5);text-align:center;">
+    <h3>🎁 Promo Spesial!</h3>
+    <p>Klik untuk melihat penawaran menarik di Shopee.</p>
+  </div>
+</div>
+
+<script>
+  const links = [
+    "https://s.shopee.co.id/AUg4dsQtYw",
+    "https://s.shopee.co.id/10phAVYIr4",
+    "https://s.shopee.co.id/10phAVYIr5",
+    "https://s.shopee.co.id/10phAVYIr46"
+  ];
+
+  const popup = document.getElementById("popup");
+
+  function showPopup() {
+    popup.style.display = "flex";
+    const randomLink = links[Math.floor(Math.random() * links.length)];
+    popup.onclick = function() {
+      window.open(randomLink, "_blank");
+      popup.style.display = "none";
+    };
+  }
+
+  setInterval(showPopup, 180000); // setiap 3 menit
+  setTimeout(showPopup, 5000);    // pertama kali setelah 5 detik
+</script>
+
 <body>
 
   <h1>DRAMAIN - Drama China Gratis</h1>
