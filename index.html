@@ -124,7 +124,7 @@
 </head>
 
   <style>
-  #popup-iklan {
+  .popup-iklan {
     display: none;
     position: fixed;
     top: 0; left: 0;
@@ -134,7 +134,7 @@
     align-items: center;
     z-index: 9999;
   }
-  #popup-iklan img {
+  .popup-iklan img {
     max-width: 80vw;
     max-height: 80vh;
     cursor: pointer;
@@ -142,45 +142,58 @@
   }
 </style>
 
-<div id="popup-iklan">
-  <img src="iklan1.jpg" alt="Iklan Shopee" id="popup-img">
+<!-- Popup pertama -->
+<div class="popup-iklan" id="popup-iklan-1">
+  <img src="iklan1.jpg" alt="Iklan Shopee">
+</div>
+
+<!-- Popup kedua -->
+<div class="popup-iklan" id="popup-iklan-2">
+  <img src="iklan1.jpg" alt="Iklan Shopee">
 </div>
 
 <script>
-  const popup = document.getElementById('popup-iklan');
-  const popupImg = document.getElementById('popup-img');
-
-  let popupClicked = false;
+  const popup1 = document.getElementById('popup-iklan-1');
+  const popup2 = document.getElementById('popup-iklan-2');
   let buttonClicked = false;
 
-  // Fungsi untuk menampilkan popup
-  function showPopup() {
-    if (!popupClicked) {
-      popup.style.display = 'flex';
-    }
+  function showPopup(popup) {
+    popup.style.display = 'flex';
   }
 
-  // Tampilkan popup pertama kali setelah 1 detik
-  setTimeout(showPopup, 1000);
-
-  // Tampilkan kembali setiap 2 menit
-  setInterval(showPopup, 120000); // 2 menit = 120.000 ms
-
-  // Saat popup diklik
-  popupImg.addEventListener('click', function () {
-    popupClicked = true;
+  function hidePopup(popup) {
     popup.style.display = 'none';
-    window.open('https://s.shopee.co.id/7078Ubl2Ub', '_blank');
+  }
+
+  // Klik untuk close popup dan redirect
+  [popup1, popup2].forEach(popup => {
+    popup.addEventListener('click', function () {
+      hidePopup(popup);
+      window.open('https://s.shopee.co.id/7078Ubl2Ub', '_blank');
+    });
   });
 
-  // Redirect satu kali saat tombol di web diklik
+  // Tampilkan dua lapis popup di awal (dengan jeda)
+  setTimeout(() => showPopup(popup1), 1000);
+  setTimeout(() => showPopup(popup2), 1500);
+
+  // Munculkan popup lagi setiap 90 detik
+  setInterval(() => {
+    showPopup(popup1);
+  }, 90000);
+
+  // Saat tombol di-klik, arahkan dan tampilkan popup
   document.addEventListener('click', function (e) {
     if (!buttonClicked && e.target.tagName.toLowerCase() === 'button') {
       buttonClicked = true;
-      window.open('https://s.shopee.co.id/AUg4dsQtYw', '_blank');
+      showPopup(popup2);
+      setTimeout(() => {
+        window.open('https://s.shopee.co.id/AUg4dsQtYw', '_blank');
+      }, 300); // Tunggu sedikit agar popup terlihat dulu
     }
   });
 </script>
+
 
 <body>
 
