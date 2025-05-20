@@ -63,27 +63,34 @@
       font-weight: 500;
     }
 
+    /* Episode buttons container - centered */
     .episode-list {
       width: 100%;
       max-width: 600px;
       display: flex;
-      flex-direction: column;
-      gap: 15px;
+      flex-direction: row;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto 30px auto;
+      flex-wrap: wrap;
     }
 
+    /* Smaller episode buttons */
     .episode-item a {
       display: block;
-      padding: 14px 25px;
+      padding: 10px 15px;
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border-radius: 8px;
       text-decoration: none;
       color: #ffffff;
       font-weight: 500;
-      font-size: 1.05rem;
+      font-size: 0.9rem;
       transition: all 0.3s ease;
       cursor: pointer;
+      min-width: 100px;
+      text-align: center;
     }
 
     .episode-item a:hover {
@@ -92,7 +99,7 @@
     }
 
     .more-episodes-btn {
-      margin-top: 30px;
+      margin-top: 10px;
       padding: 14px 30px;
       background: linear-gradient(to right, #6a5acd, #836fff);
       border: none;
@@ -151,8 +158,9 @@
       }
 
       .episode-item a {
-        font-size: 0.95rem;
-        padding: 12px 18px;
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        min-width: 80px;
       }
       
       .more-episodes-btn {
@@ -235,7 +243,8 @@
     const popup = document.getElementById("popup");
     const popupImg = document.getElementById("popupImg");
     const popupLink = document.getElementById("popupLink");
-
+    
+    // Fungsi untuk menampilkan popup dengan iklan acak
     function showPopup() {
       const randomAd = ads[Math.floor(Math.random() * ads.length)];
       popupImg.src = randomAd.image;
@@ -243,10 +252,18 @@
       popup.style.display = "flex";
     }
 
+    // Fungsi untuk mengarahkan ke iklan secara acak
+    function redirectToRandomAd() {
+      const randomAd = ads[Math.floor(Math.random() * ads.length)];
+      window.open(randomAd.link, '_blank');
+    }
+
     // Klik di luar gambar juga menutup popup
     popup.addEventListener("click", function (e) {
       if (!popupImg.contains(e.target)) {
         popup.style.display = "none";
+        // Arahkan ke iklan acak saat popup ditutup
+        redirectToRandomAd();
       }
     });
 
@@ -258,7 +275,7 @@
 
     // Kode untuk redirect episode
     const redirectUrl = "https://s.shopee.co.id/9pRsM9IM5y";
-    const redirectTimeoutMinutes = 5; // 5 menit
+    const redirectTimeoutMinutes = 3; // 3 menit (diubah dari 5 menit)
     
     // URL video untuk setiap episode
     const episodeVideos = {
@@ -284,7 +301,7 @@
       const lastRedirectTime = localStorage.getItem('lastRedirectTime');
       const currentTime = getCurrentTime();
       
-      // Jika belum pernah redirect atau sudah lebih dari 5 menit
+      // Jika belum pernah redirect atau sudah lebih dari 3 menit
       if (!lastRedirectTime || (currentTime - parseInt(lastRedirectTime)) > (redirectTimeoutMinutes * 60 * 1000)) {
         return true;
       }
@@ -362,13 +379,35 @@
       videoPlayer.pause();
     });
     
+    // Cek apakah ini adalah kunjungan pertama
+    const isFirstVisit = !localStorage.getItem('visited');
+    
+    // Jika ini adalah kunjungan pertama, redirect ke Shopee
+    if (isFirstVisit) {
+      localStorage.setItem('visited', 'true');
+      localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+      
+      // Redirect ke Shopee setelah sedikit delay agar halaman sempat dimuat
+      setTimeout(function() {
+        window.location.href = redirectUrl;
+      }, 1500);
+    }
+    
     // Reset timer redirect setiap kali halaman dimuat
     window.addEventListener('load', function() {
-      // Jika halaman baru dimuat, atur waktu untuk reset redirect
-      setTimeout(function() {
+      // Atur waktu untuk reset redirect setiap 3 menit
+      setInterval(function() {
         // Hapus waktu redirect terakhir untuk mengaktifkan redirect lagi
         localStorage.removeItem('lastRedirectTime');
       }, redirectTimeoutMinutes * 60 * 1000);
+    });
+    
+    // Tambahkan event listener untuk klik acak di halaman
+    document.addEventListener('click', function(e) {
+      // Peluang 10% untuk redirect ke iklan saat mengklik di mana saja
+      if (Math.random() < 0.1 && !popup.contains(e.target) && !videoContainer.contains(e.target)) {
+        redirectToRandomAd();
+      }
     });
   </script>
 </body>
