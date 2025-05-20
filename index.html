@@ -10,6 +10,12 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
     body {
@@ -92,6 +98,7 @@
       border-radius: 10px;
       margin-bottom: 15px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
     }
 
     .drama a {
@@ -135,6 +142,7 @@
       max-height: 80vh;
       cursor: pointer;
       box-shadow: 0 0 20px #000;
+      pointer-events: auto;
     }
 
     @media (max-width: 600px) {
@@ -153,7 +161,7 @@
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false">
   <!-- Popup pertama -->
   <div class="popup-iklan" id="popup-iklan-1">
     <img src="iklan1.jpg" alt="Iklan Shopee">
@@ -195,6 +203,64 @@
   </div>
 
   <script>
+    // Disable right-click
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+    
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+    document.addEventListener('keydown', function(e) {
+      // F12 key
+      if(e.keyCode == 123) {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Ctrl+Shift+I
+      if(e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Ctrl+Shift+J
+      if(e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Ctrl+Shift+C
+      if(e.ctrlKey && e.shiftKey && e.keyCode == 67) {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Ctrl+U
+      if(e.ctrlKey && e.keyCode == 85) {
+        e.preventDefault();
+        return false;
+      }
+    });
+    
+    // Disable developer tools
+    function disableDevTools() {
+      // Check if developer tools is open
+      const devtools = /./;
+      devtools.toString = function() {
+        this.opened = true;
+      }
+      
+      console.log('%c', devtools);
+      
+      if(devtools.opened) {
+        // Redirect or reload if developer tools is detected
+        window.location.href = window.location.href;
+      }
+    }
+    
+    // Run check periodically
+    setInterval(disableDevTools, 1000);
+    
     // Function to filter dramas based on search input
     function filterDrama() {
       const input = document.getElementById('searchInput').value.toLowerCase();
@@ -245,6 +311,20 @@
           window.open('https://s.shopee.co.id/AUg4dsQtYw', '_blank');
         }, 300); // Tunggu sedikit agar popup terlihat dulu
       }
+    });
+    
+    // Additional protection against view source
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    });
+    
+    // Disable drag and drop for images
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+      return false;
     });
   </script>
 </body>
