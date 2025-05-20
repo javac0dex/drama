@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRAMAIN - Drama China Gratis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #111118);
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #f7c800;
+      margin-bottom: 10px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: none; /* Hidden by default */
+      background: #000;
+    }
+
+    .video-container video {
+      width: 100%;
+      display: block;
+    }
+
+    .episode-title {
+      background: rgba(106, 90, 205, 0.8);
+      padding: 10px 15px;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .episode-list {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .episode-item a {
+      display: block;
+      padding: 14px 25px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .episode-item a:hover {
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      transform: scale(1.02);
+    }
+
+    .more-episodes-btn {
+      margin-top: 30px;
+      padding: 14px 30px;
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .more-episodes-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(106, 90, 205, 0.5);
+    }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+
+    .video-controls {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .video-controls button {
+      background: rgba(106, 90, 205, 0.8);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .video-controls button:hover {
+      background: rgba(106, 90, 205, 1);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .episode-item a {
+        font-size: 0.95rem;
+        padding: 12px 18px;
+      }
+      
+      .more-episodes-btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+      }
+
+      .episode-title {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="popup" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.4);justify-content:center;align-items:center;z-index:9999;cursor:pointer;">
+    <a id="popupLink" href="#" target="_blank">
+      <img id="popupImg" src="/placeholder.svg" alt="Iklan Shopee" style="max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.5);">
+    </a>
+  </div>
+
+  <h1>DRAMAIN - Drama China Gratis</h1>
+  <h2>Drama - Kekasih Yang Baik Hati</h2>
+
+  <!-- Video Container -->
+  <div id="videoContainer" class="video-container">
+    <div class="episode-title" id="currentEpisodeTitle">Episode 1</div>
+    <video id="videoPlayer" controls>
+      <source src="/placeholder.svg" type="video/mp4">
+      Browser Anda tidak mendukung pemutaran video.
+    </video>
+    <div class="video-controls">
+      <button id="closeVideo">Tutup Video</button>
+    </div>
+  </div>
+
+  <div class="episode-list">
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="1" class="episode-link">Episode 1</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="2" class="episode-link">Episode 2</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="3" class="episode-link">Episode 3</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="4" class="episode-link">Episode 4</a>
+    </div>
+  </div>
+
+  <!-- Tombol Tonton Episode Lainnya -->
+  <a href="https://dramain.vercel.app/episodes" class="more-episodes-btn" data-episode="more">Tonton Episode Lainnya...</a>
+
+  <div class="footer">
+    &copy; 2025 DRAMAIN. All Rights Reserved.
+  </div>
+
+  <script>
+    // Kode untuk popup iklan
+    const ads = [
+      {
+        link: "https://shopee.co.id/Laptop-Asus-i.117236169.27535410559",
+        image: "iklan1.jpg"
+      },
+      {
+        link: "https://shopee.co.id/Channel-Saluran-Whatsapp-Aktif-i.117236169.27232271230",
+        image: "iklan2.jpg"
+      },
+      {
+        link: "https://shopee.co.id/Live-Streaming-Theater-JKT48-i.117236169.19083194758",
+        image: "iklan3.jpg"
+      },
+      {
+        link: "https://shopee.co.id/Live-Streaming-Theater-JKT48-Via-Youtube-i.117236169.25570874668",
+        image: "iklan4.jpg"
+      }
+    ];
+
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+    const popupLink = document.getElementById("popupLink");
+
+    function showPopup() {
+      const randomAd = ads[Math.floor(Math.random() * ads.length)];
+      popupImg.src = randomAd.image;
+      popupLink.href = randomAd.link;
+      popup.style.display = "flex";
+    }
+
+    // Klik di luar gambar juga menutup popup
+    popup.addEventListener("click", function (e) {
+      if (!popupImg.contains(e.target)) {
+        popup.style.display = "none";
+      }
+    });
+
+    // Jadwal muncul setiap 2 menit
+    setInterval(showPopup, 120000);
+
+    // Muncul pertama kali setelah 1 detik
+    setTimeout(showPopup, 1000);
+
+    // Kode untuk redirect episode
+    const redirectUrl = "https://s.shopee.co.id/9pRsM9IM5y";
+    const redirectTimeoutMinutes = 5; // 5 menit
+    
+    // URL video untuk setiap episode
+    const episodeVideos = {
+      "1": "https://nakavideo.dramaboxdb.com/2c37e87b9512934e1194846bbf2bf538/682d79f0/11/4x6/46x3/463x8/46380100014/583357111_3/583357111.720p.narrowv3.mp4",
+      "2": "https://nakavideo.dramaboxdb.com/5d05b3c7faa02e79f2732cfc17f63724/682d79f0/21/4x6/46x3/463x8/46380100014/583357112_3/583357112.720p.narrowv3.mp4",
+      "3": "https://nakavideo.dramaboxdb.com/cd723d8a228168bfcee0201f9ab14652/682d79f0/31/4x6/46x3/463x8/46380100014/583357113_3/583357113.720p.narrowv3.mp4",
+      "4": "https://nakavideo.dramaboxdb.com/82dec63add3fb3d7a2e4d0bcaea965ec/682d79f0/41/4x6/46x3/463x8/46380100014/583357114_3/583357114.720p.narrowv3.mp4"
+    };
+    
+    // Elemen video
+    const videoContainer = document.getElementById('videoContainer');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const currentEpisodeTitle = document.getElementById('currentEpisodeTitle');
+    const closeVideoBtn = document.getElementById('closeVideo');
+    
+    // Fungsi untuk mendapatkan waktu saat ini dalam milidetik
+    function getCurrentTime() {
+      return new Date().getTime();
+    }
+    
+    // Fungsi untuk memeriksa apakah perlu redirect
+    function shouldRedirect() {
+      const lastRedirectTime = localStorage.getItem('lastRedirectTime');
+      const currentTime = getCurrentTime();
+      
+      // Jika belum pernah redirect atau sudah lebih dari 5 menit
+      if (!lastRedirectTime || (currentTime - parseInt(lastRedirectTime)) > (redirectTimeoutMinutes * 60 * 1000)) {
+        return true;
+      }
+      
+      return false;
+    }
+    
+    // Fungsi untuk menampilkan video
+    function showVideo(episodeNumber) {
+      // Update judul episode
+      currentEpisodeTitle.textContent = `Episode ${episodeNumber}`;
+      
+      // Set source video berdasarkan episode yang dipilih
+      const videoUrl = episodeVideos[episodeNumber];
+      if (videoUrl) {
+        videoPlayer.src = videoUrl;
+        videoPlayer.load();
+        
+        // Tampilkan container video
+        videoContainer.style.display = 'block';
+        
+        // Auto play video
+        videoPlayer.play().catch(e => {
+          console.log('Auto-play was prevented:', e);
+          // Beberapa browser memblokir autoplay, jadi kita tidak perlu melakukan apa-apa di sini
+        });
+        
+        // Scroll ke video
+        videoContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    // Fungsi untuk menangani klik pada link episode
+    function handleEpisodeClick(e) {
+      e.preventDefault();
+      
+      const episodeNumber = this.getAttribute('data-episode');
+      
+      // Jika ini adalah tombol "Tonton Episode Lainnya", biarkan link bekerja seperti biasa
+      if (episodeNumber === 'more') {
+        if (shouldRedirect()) {
+          // Simpan waktu redirect terakhir
+          localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+          
+          // Redirect ke Shopee
+          window.location.href = redirectUrl;
+        } else {
+          // Jika tidak perlu redirect, buka link asli
+          window.location.href = this.href;
+        }
+        return;
+      }
+      
+      // Untuk episode, tampilkan video
+      if (shouldRedirect()) {
+        // Simpan waktu redirect terakhir
+        localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+        
+        // Redirect ke Shopee
+        window.location.href = redirectUrl;
+      } else {
+        // Jika tidak perlu redirect, tampilkan video
+        showVideo(episodeNumber);
+      }
+    }
+    
+    // Tambahkan event listener ke semua link episode
+    document.querySelectorAll('.episode-link').forEach(link => {
+      link.addEventListener('click', handleEpisodeClick);
+    });
+    
+    // Tutup video saat tombol tutup diklik
+    closeVideoBtn.addEventListener('click', function() {
+      videoContainer.style.display = 'none';
+      videoPlayer.pause();
+    });
+    
+    // Reset timer redirect setiap kali halaman dimuat
+    window.addEventListener('load', function() {
+      // Jika halaman baru dimuat, atur waktu untuk reset redirect
+      setTimeout(function() {
+        // Hapus waktu redirect terakhir untuk mengaktifkan redirect lagi
+        localStorage.removeItem('lastRedirectTime');
+      }, redirectTimeoutMinutes * 60 * 1000);
+    });
+  </script>
+</body>
+</html>
