@@ -85,6 +85,15 @@
       margin-bottom: 15px;
     }
 
+    .drama-thumbnail {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
     .drama a {
       display: inline-block;
       padding: 12px 28px;
@@ -110,6 +119,24 @@
       color: #bbb;
     }
 
+    .popup-iklan {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .popup-iklan img {
+      max-width: 80vw;
+      max-height: 80vh;
+      cursor: pointer;
+      box-shadow: 0 0 20px #000;
+    }
+
     @media (max-width: 600px) {
       h1 {
         font-size: 2rem;
@@ -119,83 +146,23 @@
         font-size: 0.9rem;
         padding: 10px 22px;
       }
+      
+      .drama-thumbnail {
+        height: 150px;
+      }
     }
   </style>
 </head>
-
-  <style>
-  .popup-iklan {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-  .popup-iklan img {
-    max-width: 80vw;
-    max-height: 80vh;
-    cursor: pointer;
-    box-shadow: 0 0 20px #000;
-  }
-</style>
-
-<!-- Popup pertama -->
-<div class="popup-iklan" id="popup-iklan-1">
-  <img src="iklan1.jpg" alt="Iklan Shopee">
-</div>
-
-<!-- Popup kedua -->
-<div class="popup-iklan" id="popup-iklan-2">
-  <img src="iklan1.jpg" alt="Iklan Shopee">
-</div>
-
-<script>
-  const popup1 = document.getElementById('popup-iklan-1');
-  const popup2 = document.getElementById('popup-iklan-2');
-  let buttonClicked = false;
-
-  function showPopup(popup) {
-    popup.style.display = 'flex';
-  }
-
-  function hidePopup(popup) {
-    popup.style.display = 'none';
-  }
-
-  // Klik untuk close popup dan redirect
-  [popup1, popup2].forEach(popup => {
-    popup.addEventListener('click', function () {
-      hidePopup(popup);
-      window.open('https://s.shopee.co.id/7078Ubl2Ub', '_blank');
-    });
-  });
-
-  // Tampilkan dua lapis popup di awal (dengan jeda)
-  setTimeout(() => showPopup(popup1), 1000);
-  setTimeout(() => showPopup(popup2), 1500);
-
-  // Munculkan popup lagi setiap 90 detik
-  setInterval(() => {
-    showPopup(popup1);
-  }, 90000);
-
-  // Saat tombol di-klik, arahkan dan tampilkan popup
-  document.addEventListener('click', function (e) {
-    if (!buttonClicked && e.target.tagName.toLowerCase() === 'button') {
-      buttonClicked = true;
-      showPopup(popup2);
-      setTimeout(() => {
-        window.open('https://s.shopee.co.id/AUg4dsQtYw', '_blank');
-      }, 300); // Tunggu sedikit agar popup terlihat dulu
-    }
-  });
-</script>
-
-
 <body>
+  <!-- Popup pertama -->
+  <div class="popup-iklan" id="popup-iklan-1">
+    <img src="iklan1.jpg" alt="Iklan Shopee">
+  </div>
+
+  <!-- Popup kedua -->
+  <div class="popup-iklan" id="popup-iklan-2">
+    <img src="iklan1.jpg" alt="Iklan Shopee">
+  </div>
 
   <h1>DRAMAIN - Drama China Gratis</h1>
 
@@ -205,16 +172,19 @@
 
   <div class="container" id="dramaList">
     <div class="drama">
+      <img src="thumbnail.png" alt="Kekasih Yang Baik Hati" class="drama-thumbnail">
       <h2>Kekasih Yang Baik Hati</h2>
       <a href="https://linktr.ee/s/templates/kekasih" target="_blank">Tonton Sekarang</a>
     </div>
 
     <div class="drama">
+      <img src="thumbnail.png" alt="Prajurit Cinta" class="drama-thumbnail">
       <h2>Prajurit Cinta</h2>
       <a href="https://linktr.ee/s/templates/prajurit" target="_blank">Tonton Sekarang</a>
     </div>
 
     <div class="drama">
+      <img src="thumbnail.png" alt="Klasik Mata Tajam" class="drama-thumbnail">
       <h2>Klasik Mata Tajam</h2>
       <a href="https://linktr.ee/s/templates/matatajam" target="_blank">Tonton Sekarang</a>
     </div>
@@ -225,6 +195,7 @@
   </div>
 
   <script>
+    // Function to filter dramas based on search input
     function filterDrama() {
       const input = document.getElementById('searchInput').value.toLowerCase();
       const dramas = document.querySelectorAll('.drama');
@@ -234,7 +205,47 @@
         drama.style.display = title.includes(input) ? 'block' : 'none';
       });
     }
-  </script>
 
+    // Popup handling
+    const popup1 = document.getElementById('popup-iklan-1');
+    const popup2 = document.getElementById('popup-iklan-2');
+    let buttonClicked = false;
+
+    function showPopup(popup) {
+      popup.style.display = 'flex';
+    }
+
+    function hidePopup(popup) {
+      popup.style.display = 'none';
+    }
+
+    // Klik untuk close popup dan redirect
+    [popup1, popup2].forEach(popup => {
+      popup.addEventListener('click', function () {
+        hidePopup(popup);
+        window.open('https://s.shopee.co.id/7078Ubl2Ub', '_blank');
+      });
+    });
+
+    // Tampilkan dua lapis popup di awal (dengan jeda)
+    setTimeout(() => showPopup(popup1), 1000);
+    setTimeout(() => showPopup(popup2), 1500);
+
+    // Munculkan popup lagi setiap 90 detik
+    setInterval(() => {
+      showPopup(popup1);
+    }, 90000);
+
+    // Saat tombol di-klik, arahkan dan tampilkan popup
+    document.addEventListener('click', function (e) {
+      if (!buttonClicked && e.target.tagName.toLowerCase() === 'a') {
+        buttonClicked = true;
+        showPopup(popup2);
+        setTimeout(() => {
+          window.open('https://s.shopee.co.id/AUg4dsQtYw', '_blank');
+        }, 300); // Tunggu sedikit agar popup terlihat dulu
+      }
+    });
+  </script>
 </body>
 </html>
