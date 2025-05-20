@@ -242,25 +242,6 @@
       }
     });
     
-    // Disable developer tools
-    function disableDevTools() {
-      // Check if developer tools is open
-      const devtools = /./;
-      devtools.toString = function() {
-        this.opened = true;
-      }
-      
-      console.log('%c', devtools);
-      
-      if(devtools.opened) {
-        // Redirect or reload if developer tools is detected
-        window.location.href = window.location.href;
-      }
-    }
-    
-    // Run check periodically
-    setInterval(disableDevTools, 1000);
-    
     // Function to filter dramas based on search input
     function filterDrama() {
       const input = document.getElementById('searchInput').value.toLowerCase();
@@ -310,14 +291,6 @@
         setTimeout(() => {
           window.open('https://s.shopee.co.id/AUg4dsQtYw', '_blank');
         }, 300); // Tunggu sedikit agar popup terlihat dulu
-      }
-    });
-    
-    // Additional protection against view source
-    document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey) {
-        e.stopPropagation();
-        e.preventDefault();
       }
     });
     
