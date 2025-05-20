@@ -63,22 +63,36 @@
       font-weight: 500;
     }
 
-    /* Episode buttons container - centered */
+    /* Episode list container - improved layout */
     .episode-list {
       width: 100%;
-      max-width: 600px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
       gap: 10px;
       margin: 0 auto 30px auto;
-      flex-wrap: wrap;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
-    /* Smaller episode buttons */
+    /* Episode section title */
+    .episode-section-title {
+      grid-column: 1 / -1;
+      color: #f7c800;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Improved episode buttons */
     .episode-item a {
-      display: block;
-      padding: 10px 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 5px;
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -89,13 +103,13 @@
       font-size: 0.9rem;
       transition: all 0.3s ease;
       cursor: pointer;
-      min-width: 100px;
+      height: 40px;
       text-align: center;
     }
 
     .episode-item a:hover {
       background: linear-gradient(to right, #6a5acd, #836fff);
-      transform: scale(1.02);
+      transform: scale(1.05);
     }
 
     .more-episodes-btn {
@@ -148,6 +162,13 @@
       background: rgba(106, 90, 205, 1);
     }
 
+    @media (max-width: 768px) {
+      .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+      }
+    }
+
     @media (max-width: 600px) {
       h1 {
         font-size: 2rem;
@@ -159,8 +180,8 @@
 
       .episode-item a {
         font-size: 0.85rem;
-        padding: 8px 12px;
-        min-width: 80px;
+        padding: 8px 5px;
+        height: 36px;
       }
       
       .more-episodes-btn {
@@ -170,6 +191,12 @@
 
       .episode-title {
         font-size: 1rem;
+      }
+
+      .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 6px;
+        padding: 10px;
       }
     }
   </style>
@@ -198,158 +225,157 @@
   </div>
 
   <div class="episode-list">
+    <div class="episode-section-title">Daftar Episode</div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="1" class="episode-link">Episode 1</a>
+      <a href="javascript:void(0)" data-episode="1" class="episode-link">Ep 1</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="2" class="episode-link">Episode 2</a>
+      <a href="javascript:void(0)" data-episode="2" class="episode-link">Ep 2</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="3" class="episode-link">Episode 3</a>
+      <a href="javascript:void(0)" data-episode="3" class="episode-link">Ep 3</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="4" class="episode-link">Episode 4</a>
+      <a href="javascript:void(0)" data-episode="4" class="episode-link">Ep 4</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="5" class="episode-link">Episode 5</a>
+      <a href="javascript:void(0)" data-episode="5" class="episode-link">Ep 5</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="6" class="episode-link">Episode 6</a>
+      <a href="javascript:void(0)" data-episode="6" class="episode-link">Ep 6</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="7" class="episode-link">Episode 7</a>
+      <a href="javascript:void(0)" data-episode="7" class="episode-link">Ep 7</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="8" class="episode-link">Episode 8</a>
+      <a href="javascript:void(0)" data-episode="8" class="episode-link">Ep 8</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="9" class="episode-link">Episode 9</a>
+      <a href="javascript:void(0)" data-episode="9" class="episode-link">Ep 9</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="10" class="episode-link">Episode 10</a>
+      <a href="javascript:void(0)" data-episode="10" class="episode-link">Ep 10</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="11" class="episode-link">Episode 11</a>
+      <a href="javascript:void(0)" data-episode="11" class="episode-link">Ep 11</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="12" class="episode-link">Episode 12</a>
+      <a href="javascript:void(0)" data-episode="12" class="episode-link">Ep 12</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="13" class="episode-link">Episode 13</a>
+      <a href="javascript:void(0)" data-episode="13" class="episode-link">Ep 13</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="14" class="episode-link">Episode 14</a>
+      <a href="javascript:void(0)" data-episode="14" class="episode-link">Ep 14</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="15" class="episode-link">Episode 15</a>
+      <a href="javascript:void(0)" data-episode="15" class="episode-link">Ep 15</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="16" class="episode-link">Episode 16</a>
+      <a href="javascript:void(0)" data-episode="16" class="episode-link">Ep 16</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="17" class="episode-link">Episode 17</a>
+      <a href="javascript:void(0)" data-episode="17" class="episode-link">Ep 17</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="18" class="episode-link">Episode 18</a>
+      <a href="javascript:void(0)" data-episode="18" class="episode-link">Ep 18</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="19" class="episode-link">Episode 19</a>
+      <a href="javascript:void(0)" data-episode="19" class="episode-link">Ep 19</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="20" class="episode-link">Episode 20</a>
+      <a href="javascript:void(0)" data-episode="20" class="episode-link">Ep 20</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="21" class="episode-link">Episode 21</a>
+      <a href="javascript:void(0)" data-episode="21" class="episode-link">Ep 21</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="22" class="episode-link">Episode 22</a>
+      <a href="javascript:void(0)" data-episode="22" class="episode-link">Ep 22</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="23" class="episode-link">Episode 23</a>
+      <a href="javascript:void(0)" data-episode="23" class="episode-link">Ep 23</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="24" class="episode-link">Episode 24</a>
+      <a href="javascript:void(0)" data-episode="24" class="episode-link">Ep 24</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="25" class="episode-link">Episode 25</a>
+      <a href="javascript:void(0)" data-episode="25" class="episode-link">Ep 25</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="26" class="episode-link">Episode 26</a>
+      <a href="javascript:void(0)" data-episode="26" class="episode-link">Ep 26</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="27" class="episode-link">Episode 27</a>
+      <a href="javascript:void(0)" data-episode="27" class="episode-link">Ep 27</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="28" class="episode-link">Episode 28</a>
+      <a href="javascript:void(0)" data-episode="28" class="episode-link">Ep 28</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="29" class="episode-link">Episode 29</a>
+      <a href="javascript:void(0)" data-episode="29" class="episode-link">Ep 29</a>
     </div>
     <div class="episode-item">
-      <a href="javascript:void(0)" data-episode="30" class="episode-link">Episode 30</a>
+      <a href="javascript:void(0)" data-episode="30" class="episode-link">Ep 30</a>
     </div>
     <div class="episode-item">
-  <a href="javascript:void(0)" data-episode="31" class="episode-link">Episode 31</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="32" class="episode-link">Episode 32</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="33" class="episode-link">Episode 33</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="34" class="episode-link">Episode 34</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="35" class="episode-link">Episode 35</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="36" class="episode-link">Episode 36</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="37" class="episode-link">Episode 37</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="38" class="episode-link">Episode 38</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="39" class="episode-link">Episode 39</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="40" class="episode-link">Episode 40</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="41" class="episode-link">Episode 41</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="42" class="episode-link">Episode 42</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="43" class="episode-link">Episode 43</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="44" class="episode-link">Episode 44</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="45" class="episode-link">Episode 45</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="46" class="episode-link">Episode 46</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="47" class="episode-link">Episode 47</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="48" class="episode-link">Episode 48</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="49" class="episode-link">Episode 49</a>
-</div>
-<div class="episode-item">
-  <a href="javascript:void(0)" data-episode="50" class="episode-link">Episode 50</a>
-</div>
-    
-    
+      <a href="javascript:void(0)" data-episode="31" class="episode-link">Ep 31</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="32" class="episode-link">Ep 32</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="33" class="episode-link">Ep 33</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="34" class="episode-link">Ep 34</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="35" class="episode-link">Ep 35</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="36" class="episode-link">Ep 36</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="37" class="episode-link">Ep 37</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="38" class="episode-link">Ep 38</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="39" class="episode-link">Ep 39</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="40" class="episode-link">Ep 40</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="41" class="episode-link">Ep 41</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="42" class="episode-link">Ep 42</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="43" class="episode-link">Ep 43</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="44" class="episode-link">Ep 44</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="45" class="episode-link">Ep 45</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="46" class="episode-link">Ep 46</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="47" class="episode-link">Ep 47</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="48" class="episode-link">Ep 48</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="49" class="episode-link">Ep 49</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="50" class="episode-link">Ep 50</a>
+    </div>
   </div>
 
   <!-- Tombol Tonton Episode Lainnya -->
@@ -468,52 +494,7 @@
       "47": "LINK",
       "48": "LINK",
       "49": "LINK",
-      "50": "LINK",
-      "51": "LINK",
-      "52": "LINK",
-      "53": "LINK",
-      "54": "LINK",
-      "55": "LINK",
-      "56": "LINK",
-      "57": "LINK",
-      "58": "LINK",
-      "59": "LINK",
-      "60": "LINK",
-"61": "LINK",
-"62": "LINK",
-"63": "LINK",
-"64": "LINK",
-"65": "LINK",
-"66": "LINK",
-"67": "LINK",
-"68": "LINK",
-"69": "LINK",
-"70": "LINK",
-"71": "LINK",
-"72": "LINK",
-"73": "LINK",
-"74": "LINK",
-"75": "LINK",
-"76": "LINK",
-"77": "LINK",
-"78": "LINK",
-"79": "LINK",
-"80": "LINK",
-"81": "LINK",
-"82": "LINK",
-"83": "LINK",
-"84": "LINK",
-"85": "LINK",
-"86": "LINK",
-"87": "LINK",
-"88": "LINK",
-"89": "LINK",
-"90": "LINK",
-"91": "LINK",
-"92": "LINK"
-
-      
-      
+      "50": "LINK"
     };
     
     // Elemen video
