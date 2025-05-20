@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRAMAIN - Drama China Gratis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #111118);
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #f7c800;
+      margin-bottom: 10px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: none; /* Hidden by default */
+      background: #000;
+    }
+
+    .video-container video {
+      width: 100%;
+      display: block;
+    }
+
+    .episode-title {
+      background: rgba(106, 90, 205, 0.8);
+      padding: 10px 15px;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* Episode list container - improved layout */
+    .episode-list {
+      width: 100%;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+      margin: 0 auto 30px auto;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Episode section title */
+    .episode-section-title {
+      grid-column: 1 / -1;
+      color: #f7c800;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Improved episode buttons */
+    .episode-item a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 5px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      height: 40px;
+      text-align: center;
+    }
+
+    .episode-item a:hover {
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      transform: scale(1.05);
+    }
+
+    .more-episodes-btn {
+      margin-top: 10px;
+      padding: 14px 30px;
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .more-episodes-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(106, 90, 205, 0.5);
+    }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+
+    .video-controls {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .video-controls button {
+      background: rgba(106, 90, 205, 0.8);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .video-controls button:hover {
+      background: rgba(106, 90, 205, 1);
+    }
+
+    @media (max-width: 768px) {
+      .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .episode-item a {
+        font-size: 0.85rem;
+        padding: 8px 5px;
+        height: 36px;
+      }
+      
+      .more-episodes-btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+      }
+
+      .episode-title {
+        font-size: 1rem;
+      }
+
+      .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 6px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="popup" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.4);justify-content:center;align-items:center;z-index:9999;cursor:pointer;">
+    <a id="popupLink" href="#" target="_blank">
+      <img id="popupImg" src="/placeholder.svg" alt="Iklan Shopee" style="max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.5);">
+    </a>
+  </div>
+
+  <h1>DRAMAIN - Drama China Gratis</h1>
+  <h2>Kembalinya Sang Putra Pewaris</h2>
+
+  <!-- Video Container -->
+  <div id="videoContainer" class="video-container">
+    <div class="episode-title" id="currentEpisodeTitle">Episode 1</div>
+    <video id="videoPlayer" controls>
+      <source src="/placeholder.svg" type="video/mp4">
+      Browser Anda tidak mendukung pemutaran video.
+    </video>
+    <div class="video-controls">
+      <button id="closeVideo">Tutup Video</button>
+    </div>
+  </div>
+
+  <div class="episode-list">
+    <div class="episode-section-title">Daftar Episode</div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="1" class="episode-link">Ep 1</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="2" class="episode-link">Ep 2</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="3" class="episode-link">Ep 3</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="4" class="episode-link">Ep 4</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="5" class="episode-link">Ep 5</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="6" class="episode-link">Ep 6</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="7" class="episode-link">Ep 7</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="8" class="episode-link">Ep 8</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="9" class="episode-link">Ep 9</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="10" class="episode-link">Ep 10</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="11" class="episode-link">Ep 11</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="12" class="episode-link">Ep 12</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="13" class="episode-link">Ep 13</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="14" class="episode-link">Ep 14</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="15" class="episode-link">Ep 15</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="16" class="episode-link">Ep 16</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="17" class="episode-link">Ep 17</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="18" class="episode-link">Ep 18</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="19" class="episode-link">Ep 19</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="20" class="episode-link">Ep 20</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="21" class="episode-link">Ep 21</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="22" class="episode-link">Ep 22</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="23" class="episode-link">Ep 23</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="24" class="episode-link">Ep 24</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="25" class="episode-link">Ep 25</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="26" class="episode-link">Ep 26</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="27" class="episode-link">Ep 27</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="28" class="episode-link">Ep 28</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="29" class="episode-link">Ep 29</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="30" class="episode-link">Ep 30</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="31" class="episode-link">Ep 31</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="32" class="episode-link">Ep 32</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="33" class="episode-link">Ep 33</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="34" class="episode-link">Ep 34</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="35" class="episode-link">Ep 35</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="36" class="episode-link">Ep 36</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="37" class="episode-link">Ep 37</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="38" class="episode-link">Ep 38</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="39" class="episode-link">Ep 39</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="40" class="episode-link">Ep 40</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="41" class="episode-link">Ep 41</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="42" class="episode-link">Ep 42</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="43" class="episode-link">Ep 43</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="44" class="episode-link">Ep 44</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="45" class="episode-link">Ep 45</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="46" class="episode-link">Ep 46</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="47" class="episode-link">Ep 47</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="48" class="episode-link">Ep 48</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="49" class="episode-link">Ep 49</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="50" class="episode-link">Ep 50</a>
+    </div>
+    <div class="episode-item">
+  <a href="javascript:void(0)" data-episode="51" class="episode-link">Ep. 51</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="52" class="episode-link">Ep. 52</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="53" class="episode-link">Ep. 53</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="54" class="episode-link">Ep. 54</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="55" class="episode-link">Ep. 55</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="56" class="episode-link">Ep. 56</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="57" class="episode-link">Ep. 57</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="58" class="episode-link">Ep. 58</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="59" class="episode-link">Ep. 59</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="60" class="episode-link">Ep. 60</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="61" class="episode-link">Ep. 61</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="62" class="episode-link">Ep. 62</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="63" class="episode-link">Ep. 63</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="64" class="episode-link">Ep. 64</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="65" class="episode-link">Ep. 65</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="66" class="episode-link">Ep. 66</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="67" class="episode-link">Ep. 67</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="68" class="episode-link">Ep. 68</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="69" class="episode-link">Ep. 69</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="70" class="episode-link">Ep. 70</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="71" class="episode-link">Ep. 71</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="72" class="episode-link">Ep. 72</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="73" class="episode-link">Ep. 73</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="74" class="episode-link">Ep. 74</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="75" class="episode-link">Ep. 75</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="76" class="episode-link">Ep. 76</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="77" class="episode-link">Ep. 77</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="78" class="episode-link">Ep. 78</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="79" class="episode-link">Ep. 79</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="80" class="episode-link">Ep. 80</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="81" class="episode-link">Ep. 81</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="82" class="episode-link">Ep. 82</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="83" class="episode-link">Ep. 83</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="84" class="episode-link">Ep. 84</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="85" class="episode-link">Ep. 85</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="86" class="episode-link">Ep. 86</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="87" class="episode-link">Ep. 87</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="88" class="episode-link">Ep. 88</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="89" class="episode-link">Ep. 89</a>
+</div>
+  </div>
+
+  <!-- Tombol Tonton Episode Lainnya -->
+  <a href="https://dramain.vercel.app/" class="more-episodes-btn" data-episode="more">Tonton Drama Lainnya...</a>
+
+  <div class="footer">
+    &copy; 2025 DRAMAIN. All Rights Reserved.
+  </div>
+
+  <script>
+    // Kode untuk popup iklan
+    const ads = [
+      {
+        link: "https://s.shopee.co.id/1qPPkfg9F4",
+        image: "iklan1.jpg"
+      },
+      {
+        link: "https://s.shopee.co.id/2LLkoD2J0u",
+        image: "iklan2.jpg"
+      },
+      {
+        link: "https://s.shopee.co.id/50MVzKHq1c",
+        image: "iklan3.jpg"
+      },
+      {
+        link: "https://s.shopee.co.id/9pRsM9IM5y",
+        image: "iklan4.jpg"
+      }
+    ];
+
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+    const popupLink = document.getElementById("popupLink");
+    
+    // Fungsi untuk menampilkan popup dengan iklan acak
+    function showPopup() {
+      const randomAd = ads[Math.floor(Math.random() * ads.length)];
+      popupImg.src = randomAd.image;
+      popupLink.href = randomAd.link;
+      popup.style.display = "flex";
+    }
+
+    // Fungsi untuk mengarahkan ke iklan secara acak
+    function redirectToRandomAd() {
+      const randomAd = ads[Math.floor(Math.random() * ads.length)];
+      window.open(randomAd.link, '_blank');
+    }
+
+    // Klik di luar gambar juga menutup popup
+    popup.addEventListener("click", function (e) {
+      if (!popupImg.contains(e.target)) {
+        popup.style.display = "none";
+        // Arahkan ke iklan acak saat popup ditutup
+        redirectToRandomAd();
+      }
+    });
+
+    // Jadwal muncul setiap 2 menit
+    setInterval(showPopup, 120000);
+
+    // Muncul pertama kali setelah 1 detik
+    setTimeout(showPopup, 1000);
+
+    // Kode untuk redirect episode
+    const redirectUrl = "https://s.shopee.co.id/9pRsM9IM5y";
+    const redirectTimeoutMinutes = 3; // 3 menit (diubah dari 5 menit)
+    
+    // URL video untuk setiap episode
+    const episodeVideos = {
+      "1": "https://nakavideo.dramaboxdb.com/cb757e1d59f6e2ff41742a0cc784f588/682da420/73/1x2/12x8/128x5/12850100014/578753137_1/578753137.720p.narrowv3.mp4",
+  "2": "https://nakavideo.dramaboxdb.com/63eaed82c55135a12527c49cc99665c1/682da420/83/1x2/12x8/128x5/12850100014/578753138_1/578753138.720p.narrowv3.mp4",
+  "3": "https://nakavideo.dramaboxdb.com/ec85363431445ff3b42666a93f4e1975/682da420/93/1x2/12x8/128x5/12850100014/578753139_1/578753139.720p.narrowv3.mp4",
+  "4": "https://nakavideo.dramaboxdb.com/46928a2eeab93988bec0367efb16b85e/682da420/04/1x2/12x8/128x5/12850100014/578753140_1/578753140.720p.narrowv3.mp4",
+  "5": "https://nakavideo.dramaboxdb.com/5088eb1fcf37f434b3e09072068839b8/682da420/14/1x2/12x8/128x5/12850100014/578753141_1/578753141.720p.narrowv3.mp4",
+  "6": "https://nakavideo.dramaboxdb.com/265c3283eee895f6e8f000a339d6b8b3/682da420/24/1x2/12x8/128x5/12850100014/578753142_1/578753142.720p.narrowv3.mp4",
+  "7": "https://nakavideo.dramaboxdb.com/51bcdf6afc9080feff907756261c6893/682da420/34/1x2/12x8/128x5/12850100014/578753143_1/578753143.720p.narrowv3.mp4",
+  "8": "https://nakavideo.dramaboxdb.com/bd0e565080072f2e6844133c104cdf5a/682da420/44/1x2/12x8/128x5/12850100014/578753144_1/578753144.720p.narrowv3.mp4",
+  "9": "https://nakavideo.dramaboxdb.com/0dc986c77db04dace992b31c97378730/682da420/54/1x2/12x8/128x5/12850100014/578753145_1/578753145.720p.narrowv3.mp4",
+  "10": "https://nakavideo.dramaboxdb.com/c5b5c6ad99c6dfb9a51d800f2b15da81/682da420/64/1x2/12x8/128x5/12850100014/578753146_1/578753146.720p.narrowv3.mp4",
+  "11": "https://nakavideo.dramaboxdb.com/dd4530ec995e3f052df5cd65bf5c0ea3/682da420/74/1x2/12x8/128x5/12850100014/578753147_1/578753147.720p.narrowv3.mp4",
+  "12": "https://nakavideo.dramaboxdb.com/7638ef3cea7b14490e348a6a40c6904d/682da420/84/1x2/12x8/128x5/12850100014/578753148_1/578753148.720p.narrowv3.mp4",
+  "13": "https://nakavideo.dramaboxdb.com/2599f088d763fa17c674e91e5183c76e/682da420/94/1x2/12x8/128x5/12850100014/578753149_1/578753149.720p.narrowv3.mp4",
+  "14": "https://nakavideo.dramaboxdb.com/077b19d1fa75b296b56639856c5643b6/682da420/05/1x2/12x8/128x5/12850100014/578753150_1/578753150.720p.narrowv3.mp4",
+  "15": "https://nakavideo.dramaboxdb.com/121f805feb455f3debb41d3d00fe2246/682da420/15/1x2/12x8/128x5/12850100014/578753151_1/578753151.720p.narrowv3.mp4",
+  "16": "https://nakavideo.dramaboxdb.com/d733f2eb0b3946eb9b692c89f4a8253b/682da420/25/1x2/12x8/128x5/12850100014/578753152_1/578753152.720p.narrowv3.mp4",
+  "17": "https://nakavideo.dramaboxdb.com/baea6170b50915b6fada41b51e39a453/682da420/35/1x2/12x8/128x5/12850100014/578753153_1/578753153.720p.narrowv3.mp4",
+  "18": "https://nakavideo.dramaboxdb.com/b8ca131a2f7d1659e826a649661aef94/682da420/45/1x2/12x8/128x5/12850100014/578753154_1/578753154.720p.narrowv3.mp4",
+  "19": "https://nakavideo.dramaboxdb.com/48356031c9f016b1264ef29f23695040/682da420/55/1x2/12x8/128x5/12850100014/578753155_1/578753155.720p.narrowv3.mp4",
+  "20": "https://nakavideo.dramaboxdb.com/41419a268f9bd17c86e6e76e71b2a16a/682da420/65/1x2/12x8/128x5/12850100014/578753156_1/578753156.720p.narrowv3.mp4",
+  "21": "https://nakavideo.dramaboxdb.com/9535fdda55106c14449da692cac88151/682da420/75/1x2/12x8/128x5/12850100014/578753157_1/578753157.720p.narrowv3.mp4",
+  "22": "https://nakavideo.dramaboxdb.com/0f31d0b2a83f8b8ee2a0765cfd7130b7/682da420/85/1x2/12x8/128x5/12850100014/578753158_1/578753158.720p.narrowv3.mp4",
+  "23": "https://nakavideo.dramaboxdb.com/426c47f4222b75cdd5b16e6ace6ac9f2/682da420/95/1x2/12x8/128x5/12850100014/578753159_1/578753159.720p.narrowv3.mp4",
+  "24": "https://nakavideo.dramaboxdb.com/74371c3a5c4db5691a2fde66cd376309/682da420/06/1x2/12x8/128x5/12850100014/578753160_1/578753160.720p.narrowv3.mp4",
+  "25": "https://nakavideo.dramaboxdb.com/15dfb65d3dacaf6f1f5d5ce3a2860391/682da420/16/1x2/12x8/128x5/12850100014/578753161_1/578753161.720p.narrowv3.mp4",
+  "26": "https://nakavideo.dramaboxdb.com/b9e2269312dd9ec081f4aa39e949695c/682da420/26/1x2/12x8/128x5/12850100014/578753162_1/578753162.720p.narrowv3.mp4",
+  "27": "https://nakavideo.dramaboxdb.com/4fae0b268d43112ebbc111c95ac424f1/682da420/36/1x2/12x8/128x5/12850100014/578753163_1/578753163.720p.narrowv3.mp4",
+  "28": "https://nakavideo.dramaboxdb.com/a785af1ef7d57a9161bcbc9b124eb651/682da420/46/1x2/12x8/128x5/12850100014/578753164_1/578753164.720p.narrowv3.mp4",
+  "29": "https://nakavideo.dramaboxdb.com/2a9299330e406d89b0480729e7e3752a/682da420/56/1x2/12x8/128x5/12850100014/578753165_1/578753165.720p.narrowv3.mp4",
+  "30": "https://nakavideo.dramaboxdb.com/84accab6334e58897050e6083677b57e/682da420/66/1x2/12x8/128x5/12850100014/578753166_1/578753166.720p.narrowv3.mp4",
+  "31": "https://nakavideo.dramaboxdb.com/255f40b5d5e4be70c0e19120943913f0/682da420/76/1x2/12x8/128x5/12850100014/578753167_1/578753167.720p.narrowv3.mp4",
+  "32": "https://nakavideo.dramaboxdb.com/83439266ffacd00126928ff983e81e4c/682da420/86/1x2/12x8/128x5/12850100014/578753168_1/578753168.720p.narrowv3.mp4",
+  "33": "https://nakavideo.dramaboxdb.com/1d82e76be2f0f28ec1eea0925661b0eb/682da420/96/1x2/12x8/128x5/12850100014/578753169_1/578753169.720p.narrowv3.mp4",
+  "34": "https://nakavideo.dramaboxdb.com/a91b2d0856137ae990fc2a7e413914b7/682da420/07/1x2/12x8/128x5/12850100014/578753170_1/578753170.720p.narrowv3.mp4",
+  "35": "https://nakavideo.dramaboxdb.com/04d56c7d699bcf3e3d92e4b290bc6ff5/682da420/17/1x2/12x8/128x5/12850100014/578753171_1/578753171.720p.narrowv3.mp4",
+  "36": "https://nakavideo.dramaboxdb.com/8e1d335dfc7d931369b1111b289cfabb/682da420/27/1x2/12x8/128x5/12850100014/578753172_1/578753172.720p.narrowv3.mp4",
+  "37": "https://nakavideo.dramaboxdb.com/a6725b2ea0ec7e052434bcffb9396a68/682da420/37/1x2/12x8/128x5/12850100014/578753173_1/578753173.720p.narrowv3.mp4",
+  "38": "https://nakavideo.dramaboxdb.com/42e560975f09aa4fbcafb5ea08bf747d/682da420/47/1x2/12x8/128x5/12850100014/578753174_1/578753174.720p.narrowv3.mp4",
+  "39": "https://nakavideo.dramaboxdb.com/deff110773c4be4af580d1609c5c701d/682da420/57/1x2/12x8/128x5/12850100014/578753175_1/578753175.720p.narrowv3.mp4",
+  "40": "https://nakavideo.dramaboxdb.com/023c33dc8e088c98534b0b802429953c/682da420/67/1x2/12x8/128x5/12850100014/578753176_1/578753176.720p.narrowv3.mp4",
+  "41": "https://nakavideo.dramaboxdb.com/6e8975edd37cf4f22bddd2dc4e682e9a/682da420/77/1x2/12x8/128x5/12850100014/578753177_1/578753177.720p.narrowv3.mp4",
+  "42": "https://nakavideo.dramaboxdb.com/20ec3e728f3e0d702c73494579b1d39c/682da420/87/1x2/12x8/128x5/12850100014/578753178_1/578753178.720p.narrowv3.mp4",
+  "43": "https://nakavideo.dramaboxdb.com/3be688e0a7bf881816637aa946b06e40/682da420/97/1x2/12x8/128x5/12850100014/578753179_1/578753179.720p.narrowv3.mp4",
+  "44": "https://nakavideo.dramaboxdb.com/5dcec6b5f832a7314b57bd89b8410225/682da420/08/1x2/12x8/128x5/12850100014/578753180_1/578753180.720p.narrowv3.mp4",
+  "45": "https://nakavideo.dramaboxdb.com/bb822be02473ab537ad810e722d45fdd/682da420/18/1x2/12x8/128x5/12850100014/578753181_1/578753181.720p.narrowv3.mp4",
+  "46": "https://nakavideo.dramaboxdb.com/6177d95caa1653e09235f42fe803d62c/682da420/28/1x2/12x8/128x5/12850100014/578753182_1/578753182.720p.narrowv3.mp4",
+  "47": "https://nakavideo.dramaboxdb.com/26217ae4ec37150af5ce9503f598f827/682da420/38/1x2/12x8/128x5/12850100014/578753183_1/578753183.720p.narrowv3.mp4",
+  "48": "https://nakavideo.dramaboxdb.com/dd49bd413e6ef468122453c8d3e0d49c/682da420/48/1x2/12x8/128x5/12850100014/578753184_1/578753184.720p.narrowv3.mp4",
+  "49": "https://nakavideo.dramaboxdb.com/cbb65ceaa1b90be55181715360a4c693/682da420/58/1x2/12x8/128x5/12850100014/578753185_1/578753185.720p.narrowv3.mp4",
+  "50": "https://nakavideo.dramaboxdb.com/e2e3b3b8ffa94e44336f9f73f2f8b99a/682da420/68/1x2/12x8/128x5/12850100014/578753186_1/578753186.720p.narrowv3.mp4"
+    "51": "https://nakavideo.dramaboxdb.com/37ec788632cb89eb2909d8a865367ca0/682da420/78/1x2/12x8/128x5/12850100014/578753187_1/578753187.720p.narrowv3.mp4",
+  "52": "https://nakavideo.dramaboxdb.com/e3e0a9a5bd8ba22f504ebe54cb6cc9f0/682da420/88/1x2/12x8/128x5/12850100014/578753188_1/578753188.720p.narrowv3.mp4",
+  "53": "https://nakavideo.dramaboxdb.com/76b142885ef56bb9e03566edcd1c3b49/682da420/98/1x2/12x8/128x5/12850100014/578753189_1/578753189.720p.narrowv3.mp4",
+  "54": "https://nakavideo.dramaboxdb.com/7f17fec0b25765fbd7bc0ce63c2fc01a/682da420/09/1x2/12x8/128x5/12850100014/578753190_1/578753190.720p.narrowv3.mp4",
+  "55": "https://nakavideo.dramaboxdb.com/d665ec032a0ffdbc17b4e68e28f43567/682da420/19/1x2/12x8/128x5/12850100014/578753191_1/578753191.720p.narrowv3.mp4",
+  "56": "https://nakavideo.dramaboxdb.com/acb5e47417e08345bab1b738daef5576/682da420/29/1x2/12x8/128x5/12850100014/578753192_1/578753192.720p.narrowv3.mp4",
+  "57": "https://nakavideo.dramaboxdb.com/c46123f24c76a5035828dc65acfa9211/682da420/39/1x2/12x8/128x5/12850100014/578753193_1/578753193.720p.narrowv3.mp4",
+  "58": "https://nakavideo.dramaboxdb.com/254473adce021bc471ed02b0994abf6f/682da420/49/1x2/12x8/128x5/12850100014/578753194_1/578753194.720p.narrowv3.mp4",
+  "59": "https://nakavideo.dramaboxdb.com/0eebcc773ee59c9cbaa22da179aab5f8/682da420/59/1x2/12x8/128x5/12850100014/578753195_1/578753195.720p.narrowv3.mp4",
+  "60": "https://nakavideo.dramaboxdb.com/e154de74113faa6b696c1d6b58ddd377/682da420/69/1x2/12x8/128x5/12850100014/578753196_1/578753196.720p.narrowv3.mp4",
+  "61": "https://nakavideo.dramaboxdb.com/2fe7fe099195ad97a112482cccd0fbaa/682da420/79/1x2/12x8/128x5/12850100014/578753197_1/578753197.720p.narrowv3.mp4",
+  "62": "https://nakavideo.dramaboxdb.com/beb286010c748cd83973cefcd684abd5/682da420/89/1x2/12x8/128x5/12850100014/578753198_1/578753198.720p.narrowv3.mp4",
+  "63": "https://nakavideo.dramaboxdb.com/5fa95d260e1a27317cb3c8ed5d41fcb4/682da420/99/1x2/12x8/128x5/12850100014/578753199_1/578753199.720p.narrowv3.mp4",
+  "64": "https://nakavideo.dramaboxdb.com/996414c2bee401a94776fa987a83d716/682da420/00/1x2/12x8/128x5/12850100014/578753200_1/578753200.720p.narrowv3.mp4",
+  "65": "https://nakavideo.dramaboxdb.com/42f355ed0eb7f63f15375f68f241cad2/682da420/10/1x2/12x8/128x5/12850100014/578753201_1/578753201.720p.narrowv3.mp4",
+  "66": "https://nakavideo.dramaboxdb.com/7ea1657a1040485301ccd03d48704c5d/682da420/20/1x2/12x8/128x5/12850100014/578753202_1/578753202.720p.narrowv3.mp4",
+  "67": "https://nakavideo.dramaboxdb.com/9ff1ed28332eeb9ea32a49004673ed94/682da420/30/1x2/12x8/128x5/12850100014/578753203_1/578753203.720p.narrowv3.mp4",
+  "68": "https://nakavideo.dramaboxdb.com/34ff071ef8f62e4deb87f3e7e29d4f48/682da420/40/1x2/12x8/128x5/12850100014/578753204_1/578753204.720p.narrowv3.mp4",
+  "69": "https://nakavideo.dramaboxdb.com/f5253ff1109cb94a688630a8ace4309a/682da420/50/1x2/12x8/128x5/12850100014/578753205_1/578753205.720p.narrowv3.mp4",
+  "70": "https://nakavideo.dramaboxdb.com/b281f9a11a2a6d2b18c64daf31fee2bf/682da420/60/1x2/12x8/128x5/12850100014/578753206_1/578753206.720p.narrowv3.mp4",
+  "71": "https://nakavideo.dramaboxdb.com/d8042f9818b5d36c3f6a8f8231e08d4a/682da420/70/1x2/12x8/128x5/12850100014/578753207_1/578753207.720p.narrowv3.mp4",
+  "72": "https://nakavideo.dramaboxdb.com/378c41a5099e70235223787f43246305/682da420/80/1x2/12x8/128x5/12850100014/578753208_1/578753208.720p.narrowv3.mp4",
+  "73": "https://nakavideo.dramaboxdb.com/26ab7a8e1476d373b3e1676e506bc2a1/682da420/90/1x2/12x8/128x5/12850100014/578753209_1/578753209.720p.narrowv3.mp4",
+  "74": "https://nakavideo.dramaboxdb.com/3e741e7ec0b2df282985a90089945380/682da420/01/1x2/12x8/128x5/12850100014/578753210_1/578753210.720p.narrowv3.mp4",
+  "75": "https://nakavideo.dramaboxdb.com/5fcf76fbb546bed7a9e1ab31523a8bb4/682da420/11/1x2/12x8/128x5/12850100014/578753211_1/578753211.720p.narrowv3.mp4",
+  "76": "https://nakavideo.dramaboxdb.com/aa667cc478f9a9262b3f053d0fd1a556/682da420/21/1x2/12x8/128x5/12850100014/578753212_1/578753212.720p.narrowv3.mp4",
+  "77": "https://nakavideo.dramaboxdb.com/7f2791e353fa56f25aa8a8fda02d0ea9/682da420/31/1x2/12x8/128x5/12850100014/578753213_1/578753213.720p.narrowv3.mp4",
+  "78": "https://nakavideo.dramaboxdb.com/425deb36ccb24f7e7fa8caf8050aadf8/682da420/41/1x2/12x8/128x5/12850100014/578753214_1/578753214.720p.narrowv3.mp4",
+  "79": "https://nakavideo.dramaboxdb.com/421a43ad17126b25f28fe6b7781a9429/682da420/51/1x2/12x8/128x5/12850100014/578753215_1/578753215.720p.narrowv3.mp4",
+  "80": "https://nakavideo.dramaboxdb.com/372ec39d9d8a28492a751254d55fe1e3/682da420/61/1x2/12x8/128x5/12850100014/578753216_1/578753216.720p.narrowv3.mp4",
+  "81": "https://nakavideo.dramaboxdb.com/815bc7ca5511a4c31c97588ead140371/682da420/71/1x2/12x8/128x5/12850100014/578753217_1/578753217.720p.narrowv3.mp4",
+  "82": "https://nakavideo.dramaboxdb.com/cacdd52534fa6f8b1c9638a211a4b691/682da420/81/1x2/12x8/128x5/12850100014/578753218_1/578753218.720p.narrowv3.mp4",
+  "83": "https://nakavideo.dramaboxdb.com/1bb2983f8d93187af3cd1fdd63ed3634/682da420/91/1x2/12x8/128x5/12850100014/578753219_1/578753219.720p.narrowv3.mp4",
+  "84": "https://nakavideo.dramaboxdb.com/d60552a4591af438093af49055a2cc37/682da420/02/1x2/12x8/128x5/12850100014/578753220_1/578753220.720p.narrowv3.mp4",
+  "85": "https://nakavideo.dramaboxdb.com/08cc19dbe069d5a6a63128f00344e3fc/682da420/12/1x2/12x8/128x5/12850100014/578753221_1/578753221.720p.narrowv3.mp4",
+  "86": "https://nakavideo.dramaboxdb.com/613f2eaeded8d795110686693369e478/682da420/22/1x2/12x8/128x5/12850100014/578753222_1/578753222.720p.narrowv3.mp4",
+  "87": "https://nakavideo.dramaboxdb.com/a9c3d2c6bcdca585f115a25ea5599b60/682da420/32/1x2/12x8/128x5/12850100014/578753223_1/578753223.720p.narrowv3.mp4",
+  "88": "https://nakavideo.dramaboxdb.com/2361154a3abec0cb279998c1c9af21c9/682da420/42/1x2/12x8/128x5/12850100014/578753224_1/578753224.720p.narrowv3.mp4",
+  "89": "https://nakavideo.dramaboxdb.com/73dd6c1f1afdca4170b5234c9f711fac/682da420/52/1x2/12x8/128x5/12850100014/578753225_1/578753225.720p.narrowv3.mp4"  
+    };
+    
+    // Elemen video
+    const videoContainer = document.getElementById('videoContainer');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const currentEpisodeTitle = document.getElementById('currentEpisodeTitle');
+    const closeVideoBtn = document.getElementById('closeVideo');
+    
+    // Fungsi untuk mendapatkan waktu saat ini dalam milidetik
+    function getCurrentTime() {
+      return new Date().getTime();
+    }
+    
+    // Fungsi untuk memeriksa apakah perlu redirect
+    function shouldRedirect() {
+      const lastRedirectTime = localStorage.getItem('lastRedirectTime');
+      const currentTime = getCurrentTime();
+      
+      // Jika belum pernah redirect atau sudah lebih dari 3 menit
+      if (!lastRedirectTime || (currentTime - parseInt(lastRedirectTime)) > (redirectTimeoutMinutes * 60 * 1000)) {
+        return true;
+      }
+      
+      return false;
+    }
+    
+    // Fungsi untuk menampilkan video
+    function showVideo(episodeNumber) {
+      // Update judul episode
+      currentEpisodeTitle.textContent = `Episode ${episodeNumber}`;
+      
+      // Set source video berdasarkan episode yang dipilih
+      const videoUrl = episodeVideos[episodeNumber];
+      if (videoUrl) {
+        videoPlayer.src = videoUrl;
+        videoPlayer.load();
+        
+        // Tampilkan container video
+        videoContainer.style.display = 'block';
+        
+        // Auto play video
+        videoPlayer.play().catch(e => {
+          console.log('Auto-play was prevented:', e);
+          // Beberapa browser memblokir autoplay, jadi kita tidak perlu melakukan apa-apa di sini
+        });
+        
+        // Scroll ke video
+        videoContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    // Fungsi untuk menangani klik pada link episode
+    function handleEpisodeClick(e) {
+      e.preventDefault();
+      
+      const episodeNumber = this.getAttribute('data-episode');
+      
+      // Jika ini adalah tombol "Tonton Episode Lainnya", biarkan link bekerja seperti biasa
+      if (episodeNumber === 'more') {
+        if (shouldRedirect()) {
+          // Simpan waktu redirect terakhir
+          localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+          
+          // Redirect ke Shopee
+          window.location.href = redirectUrl;
+        } else {
+          // Jika tidak perlu redirect, buka link asli
+          window.location.href = this.href;
+        }
+        return;
+      }
+      
+      // Untuk episode, tampilkan video
+      if (shouldRedirect()) {
+        // Simpan waktu redirect terakhir
+        localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+        
+        // Redirect ke Shopee
+        window.location.href = redirectUrl;
+      } else {
+        // Jika tidak perlu redirect, tampilkan video
+        showVideo(episodeNumber);
+      }
+    }
+    
+    // Tambahkan event listener ke semua link episode
+    document.querySelectorAll('.episode-link').forEach(link => {
+      link.addEventListener('click', handleEpisodeClick);
+    });
+    
+    // Tutup video saat tombol tutup diklik
+    closeVideoBtn.addEventListener('click', function() {
+      videoContainer.style.display = 'none';
+      videoPlayer.pause();
+    });
+    
+    // Cek apakah ini adalah kunjungan pertama
+    const isFirstVisit = !localStorage.getItem('visited');
+    
+    // Jika ini adalah kunjungan pertama, redirect ke Shopee
+    if (isFirstVisit) {
+      localStorage.setItem('visited', 'true');
+      localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+      
+      // Redirect ke Shopee setelah sedikit delay agar halaman sempat dimuat
+      setTimeout(function() {
+        window.location.href = redirectUrl;
+      }, 1500);
+    }
+    
+    // Reset timer redirect setiap kali halaman dimuat
+    window.addEventListener('load', function() {
+      // Atur waktu untuk reset redirect setiap 3 menit
+      setInterval(function() {
+        // Hapus waktu redirect terakhir untuk mengaktifkan redirect lagi
+        localStorage.removeItem('lastRedirectTime');
+      }, redirectTimeoutMinutes * 60 * 1000);
+    });
+    
+    // Tambahkan event listener untuk klik acak di halaman
+    document.addEventListener('click', function(e) {
+      // Peluang 10% untuk redirect ke iklan saat mengklik di mana saja
+      if (Math.random() < 0.1 && !popup.contains(e.target) && !videoContainer.contains(e.target)) {
+        redirectToRandomAd();
+      }
+    });
+  </script>
+</body>
+</html>
