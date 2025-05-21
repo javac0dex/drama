@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRAMAIN - Drama China Gratis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #111118);
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #f7c800;
+      margin-bottom: 10px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: none; /* Hidden by default */
+      background: #000;
+    }
+
+    .video-container video {
+      width: 100%;
+      display: block;
+    }
+
+    .episode-title {
+      background: rgba(106, 90, 205, 0.8);
+      padding: 10px 15px;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* Episode list container - improved layout */
+    .episode-list {
+      width: 100%;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+      margin: 0 auto 30px auto;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Episode section title */
+    .episode-section-title {
+      grid-column: 1 / -1;
+      color: #f7c800;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Improved episode buttons */
+    .episode-item a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 5px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      height: 40px;
+      text-align: center;
+    }
+
+    .episode-item a:hover {
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      transform: scale(1.05);
+    }
+
+    .more-episodes-btn {
+      margin-top: 10px;
+      padding: 14px 30px;
+      background: linear-gradient(to right, #6a5acd, #836fff);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .more-episodes-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(106, 90, 205, 0.5);
+    }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+
+    .video-controls {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .video-controls button {
+      background: rgba(106, 90, 205, 0.8);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .video-controls button:hover {
+      background: rgba(106, 90, 205, 1);
+    }
+
+    @media (max-width: 768px) {
+      .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .episode-item a {
+        font-size: 0.85rem;
+        padding: 8px 5px;
+        height: 36px;
+      }
+      
+      .more-episodes-btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+      }
+
+      .episode-title {
+        font-size: 1rem;
+      }
+
+      .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 6px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="popup" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.4);justify-content:center;align-items:center;z-index:9999;cursor:pointer;">
+    <a id="popupLink" href="#" target="_blank">
+      <img id="popupImg" src="/placeholder.svg" alt="Iklan Shopee" style="max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.5);">
+    </a>
+  </div>
+
+  <h1>DRAMAIN - Drama China Gratis</h1>
+  <h2>Kaisar Pulang ke Desa</h2>
+
+  <!-- Video Container -->
+  <div id="videoContainer" class="video-container">
+    <div class="episode-title" id="currentEpisodeTitle">Episode 1</div>
+    <video id="videoPlayer" controls>
+      <source src="/placeholder.svg" type="video/mp4">
+      Browser Anda tidak mendukung pemutaran video.
+    </video>
+    <div class="video-controls">
+      <button id="closeVideo">Tutup Video</button>
+    </div>
+  </div>
+
+  <div class="episode-list">
+    <div class="episode-section-title">Daftar Episode</div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="1" class="episode-link">Ep 1</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="2" class="episode-link">Ep 2</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="3" class="episode-link">Ep 3</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="4" class="episode-link">Ep 4</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="5" class="episode-link">Ep 5</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="6" class="episode-link">Ep 6</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="7" class="episode-link">Ep 7</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="8" class="episode-link">Ep 8</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="9" class="episode-link">Ep 9</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="10" class="episode-link">Ep 10</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="11" class="episode-link">Ep 11</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="12" class="episode-link">Ep 12</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="13" class="episode-link">Ep 13</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="14" class="episode-link">Ep 14</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="15" class="episode-link">Ep 15</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="16" class="episode-link">Ep 16</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="17" class="episode-link">Ep 17</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="18" class="episode-link">Ep 18</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="19" class="episode-link">Ep 19</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="20" class="episode-link">Ep 20</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="21" class="episode-link">Ep 21</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="22" class="episode-link">Ep 22</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="23" class="episode-link">Ep 23</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="24" class="episode-link">Ep 24</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="25" class="episode-link">Ep 25</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="26" class="episode-link">Ep 26</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="27" class="episode-link">Ep 27</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="28" class="episode-link">Ep 28</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="29" class="episode-link">Ep 29</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="30" class="episode-link">Ep 30</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="31" class="episode-link">Ep 31</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="32" class="episode-link">Ep 32</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="33" class="episode-link">Ep 33</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="34" class="episode-link">Ep 34</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="35" class="episode-link">Ep 35</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="36" class="episode-link">Ep 36</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="37" class="episode-link">Ep 37</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="38" class="episode-link">Ep 38</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="39" class="episode-link">Ep 39</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="40" class="episode-link">Ep 40</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="41" class="episode-link">Ep 41</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="42" class="episode-link">Ep 42</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="43" class="episode-link">Ep 43</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="44" class="episode-link">Ep 44</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="45" class="episode-link">Ep 45</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="46" class="episode-link">Ep 46</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="47" class="episode-link">Ep 47</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="48" class="episode-link">Ep 48</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="49" class="episode-link">Ep 49</a>
+    </div>
+    <div class="episode-item">
+      <a href="javascript:void(0)" data-episode="50" class="episode-link">Ep 50</a>
+    </div>
+    <div class="episode-item">
+  <a href="javascript:void(0)" data-episode="51" class="episode-link">Ep. 51</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="52" class="episode-link">Ep. 52</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="53" class="episode-link">Ep. 53</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="54" class="episode-link">Ep. 54</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="55" class="episode-link">Ep. 55</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="56" class="episode-link">Ep. 56</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="57" class="episode-link">Ep. 57</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="58" class="episode-link">Ep. 58</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="59" class="episode-link">Ep. 59</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="60" class="episode-link">Ep. 60</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="61" class="episode-link">Ep. 61</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="62" class="episode-link">Ep. 62</a>
+</div>
+<div class="episode-item">
+  <a href="javascript:void(0)" data-episode="63" class="episode-link">Ep. 63</a>
+</div>
+  </div>
+
+  <!-- Tombol Tonton Episode Lainnya -->
+  <a href="https://dramain.vercel.app/" class="more-episodes-btn" data-episode="more">Tonton Drama Lainnya...</a>
+
+  <div class="footer">
+    &copy; 2025 DRAMAIN. All Rights Reserved.
+  </div>
+
+  <script>
+    // Kode untuk popup iklan
+    const ads = [
+      {
+        link: "https://s.shopee.co.id/1qPPkfg9F4",
+        image: "iklan13.jpg"
+      },
+      {
+        link: "https://s.shopee.co.id/2LLkoD2J0u",
+        image: "iklan13.jpg"
+      },
+      {
+        link: "https://s.shopee.co.id/50MVzKHq1c",
+        image: "iklan13.jpg"
+      },
+      {
+        link: "https://s.shopee.co.id/9pRsM9IM5y",
+        image: "iklan13.jpg"
+      }
+    ];
+
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+    const popupLink = document.getElementById("popupLink");
+    
+    // Fungsi untuk menampilkan popup dengan iklan acak
+    function showPopup() {
+      const randomAd = ads[Math.floor(Math.random() * ads.length)];
+      popupImg.src = randomAd.image;
+      popupLink.href = randomAd.link;
+      popup.style.display = "flex";
+    }
+
+    // Fungsi untuk mengarahkan ke iklan secara acak
+    function redirectToRandomAd() {
+      const randomAd = ads[Math.floor(Math.random() * ads.length)];
+      window.open(randomAd.link, '_blank');
+    }
+
+    // Klik di luar gambar juga menutup popup
+    popup.addEventListener("click", function (e) {
+      if (!popupImg.contains(e.target)) {
+        popup.style.display = "none";
+        // Arahkan ke iklan acak saat popup ditutup
+        redirectToRandomAd();
+      }
+    });
+
+    // Jadwal muncul setiap 2 menit
+    setInterval(showPopup, 120000);
+
+    // Muncul pertama kali setelah 1 detik
+    setTimeout(showPopup, 1000);
+
+    // Kode untuk redirect episode
+    const redirectUrl = "https://s.shopee.co.id/9pRsM9IM5y";
+    const redirectTimeoutMinutes = 3; // 3 menit (diubah dari 5 menit)
+    
+    // URL video untuk setiap episode
+    const episodeVideos = {
+      "1": "https://nakavideo.dramaboxdb.com/83c1c332cd96464679d159f6b53fe5e2/682f03b0/71/8x4/84x4/844x2/84421100014/587608217_1/587608217.720p.narrowv3.mp4",
+  "2": "https://nakavideo.dramaboxdb.com/18a3d9f0102925eee17eb8e25084b267/682f03b0/81/8x4/84x4/844x2/84421100014/587608218_1/587608218.720p.narrowv3.mp4",
+  "3": "https://nakavideo.dramaboxdb.com/efb9ac8046eef68aca3fb2619364a8bc/682f03b0/91/8x4/84x4/844x2/84421100014/587608219_1/587608219.720p.narrowv3.mp4",
+      "4": "LINK",
+  "5": "LINK",
+  "6": "LINK",
+  "7": "LINK",
+  "8": "LINK",
+  "9": "LINK",
+  "10": "LINK",
+  "11": "LINK",
+  "12": "LINK",
+  "13": "LINK",
+  "14": "LINK",
+  "15": "LINK",
+  "16": "LINK",
+  "17": "LINK",
+  "18": "LINK",
+  "19": "LINK",
+  "20": "LINK",
+  "21": "LINK",
+  "22": "LINK",
+  "23": "LINK",
+  "24": "LINK",
+  "25": "LINK",
+  "26": "LINK",
+  "27": "LINK",
+  "28": "LINK",
+  "29": "LINK",
+  "30": "LINK",
+  "31": "LINK",
+  "32": "LINK",
+  "33": "LINK",
+  "34": "LINK",
+  "35": "LINK",
+  "36": "LINK",
+  "37": "LINK",
+  "38": "LINK",
+  "39": "LINK",
+  "40": "LINK",
+  "41": "LINK",
+  "42": "LINK",
+  "43": "LINK",
+  "44": "LINK",
+  "45": "LINK",
+  "46": "LINK",
+  "47": "LINK",
+  "48": "LINK",
+  "49": "LINK",
+  "50": "LINK".
+     "51": "LINK",
+  "52": "LINK",
+  "53": "LINK",
+  "54": "LINK",
+  "55": "LINK",
+  "56": "LINK",
+  "57": "LINK",
+  "58": "LINK",
+  "59": "LINK",
+  "60": "LINK",
+  "61": "LINK",
+  "62": "LINK",
+  "63": "LINK"
+    
+  
+    };
+    
+    // Elemen video
+    const videoContainer = document.getElementById('videoContainer');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const currentEpisodeTitle = document.getElementById('currentEpisodeTitle');
+    const closeVideoBtn = document.getElementById('closeVideo');
+    
+    // Fungsi untuk mendapatkan waktu saat ini dalam milidetik
+    function getCurrentTime() {
+      return new Date().getTime();
+    }
+    
+    // Fungsi untuk memeriksa apakah perlu redirect
+    function shouldRedirect() {
+      const lastRedirectTime = localStorage.getItem('lastRedirectTime');
+      const currentTime = getCurrentTime();
+      
+      // Jika belum pernah redirect atau sudah lebih dari 3 menit
+      if (!lastRedirectTime || (currentTime - parseInt(lastRedirectTime)) > (redirectTimeoutMinutes * 60 * 1000)) {
+        return true;
+      }
+      
+      return false;
+    }
+    
+    // Fungsi untuk menampilkan video
+    function showVideo(episodeNumber) {
+      // Update judul episode
+      currentEpisodeTitle.textContent = `Episode ${episodeNumber}`;
+      
+      // Set source video berdasarkan episode yang dipilih
+      const videoUrl = episodeVideos[episodeNumber];
+      if (videoUrl) {
+        videoPlayer.src = videoUrl;
+        videoPlayer.load();
+        
+        // Tampilkan container video
+        videoContainer.style.display = 'block';
+        
+        // Auto play video
+        videoPlayer.play().catch(e => {
+          console.log('Auto-play was prevented:', e);
+          // Beberapa browser memblokir autoplay, jadi kita tidak perlu melakukan apa-apa di sini
+        });
+        
+        // Scroll ke video
+        videoContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    // Fungsi untuk menangani klik pada link episode
+    function handleEpisodeClick(e) {
+      e.preventDefault();
+      
+      const episodeNumber = this.getAttribute('data-episode');
+      
+      // Jika ini adalah tombol "Tonton Episode Lainnya", biarkan link bekerja seperti biasa
+      if (episodeNumber === 'more') {
+        if (shouldRedirect()) {
+          // Simpan waktu redirect terakhir
+          localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+          
+          // Redirect ke Shopee
+          window.location.href = redirectUrl;
+        } else {
+          // Jika tidak perlu redirect, buka link asli
+          window.location.href = this.href;
+        }
+        return;
+      }
+      
+      // Untuk episode, tampilkan video
+      if (shouldRedirect()) {
+        // Simpan waktu redirect terakhir
+        localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+        
+        // Redirect ke Shopee
+        window.location.href = redirectUrl;
+      } else {
+        // Jika tidak perlu redirect, tampilkan video
+        showVideo(episodeNumber);
+      }
+    }
+    
+    // Tambahkan event listener ke semua link episode
+    document.querySelectorAll('.episode-link').forEach(link => {
+      link.addEventListener('click', handleEpisodeClick);
+    });
+    
+    // Tutup video saat tombol tutup diklik
+    closeVideoBtn.addEventListener('click', function() {
+      videoContainer.style.display = 'none';
+      videoPlayer.pause();
+    });
+    
+    // Cek apakah ini adalah kunjungan pertama
+    const isFirstVisit = !localStorage.getItem('visited');
+    
+    // Jika ini adalah kunjungan pertama, redirect ke Shopee
+    if (isFirstVisit) {
+      localStorage.setItem('visited', 'true');
+      localStorage.setItem('lastRedirectTime', getCurrentTime().toString());
+      
+      // Redirect ke Shopee setelah sedikit delay agar halaman sempat dimuat
+      setTimeout(function() {
+        window.location.href = redirectUrl;
+      }, 1500);
+    }
+    
+    // Reset timer redirect setiap kali halaman dimuat
+    window.addEventListener('load', function() {
+      // Atur waktu untuk reset redirect setiap 3 menit
+      setInterval(function() {
+        // Hapus waktu redirect terakhir untuk mengaktifkan redirect lagi
+        localStorage.removeItem('lastRedirectTime');
+      }, redirectTimeoutMinutes * 60 * 1000);
+    });
+    
+    // Tambahkan event listener untuk klik acak di halaman
+    document.addEventListener('click', function(e) {
+      // Peluang 10% untuk redirect ke iklan saat mengklik di mana saja
+      if (Math.random() < 0.1 && !popup.contains(e.target) && !videoContainer.contains(e.target)) {
+        redirectToRandomAd();
+      }
+    });
+  </script>
+</body>
+</html>
